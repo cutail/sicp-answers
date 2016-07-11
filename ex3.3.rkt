@@ -1,0 +1,10 @@
+(define (make-account n pwd)
+  (lambda (inpwd m)
+    (cond ((eq? inpwd pwd)
+           (if (eq? m 'withdraw)
+               (lambda (k) (if (> k n) (write "Insufficient Money")
+                               (begin (set! n (- n k)) n)))
+               (lambda (k) (begin (set! n (+ n k)) n))))
+          (else (lambda (k) (write "Incorrect password"))))))
+
+(define acc (make-account 100 'pwd))
